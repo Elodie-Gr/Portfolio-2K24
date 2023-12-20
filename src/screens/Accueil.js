@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Accueil = () => {
   const nameRef = useRef();
@@ -71,7 +73,7 @@ const Accueil = () => {
       drawStars();
 
       for (const star of stars) {
-        star.y += 0.1; // Adjust the speed of stars
+        star.y += 0.1;
 
         if (star.y > canvas.height) {
           star.y = 0;
@@ -86,13 +88,18 @@ const Accueil = () => {
 
   return (
     <AccueilContainer>
+      <Navbar />
+      <TextContainer>
       <Canvas ref={canvasRef}></Canvas>
       <ContainerText>
         <Name ref={nameRef}>Elodie GEORGES,</Name>
         <JobTitle ref={jobTitleRef} show={showJobTitle}>
           Développeuse web & mobile
         </JobTitle>
+        <ContactButton to="/contact">Me contacter</ContactButton>
       </ContainerText>
+      </TextContainer>
+      <ScrollDownButton href="/qui-suis-je" />
     </AccueilContainer>
   );
 };
@@ -123,6 +130,12 @@ const Canvas = styled.canvas`
 `;
 
 const AccueilContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+`;
+
+
+const TextContainer = styled.div`
   position: relative;
   background-color: black;
   width: 100%;
@@ -148,7 +161,9 @@ const AnimatedText = styled.span`
   ${({ hide }) => hide && hideText};
 `;
 
-const Name = styled(AnimatedText)``;
+const Name = styled(AnimatedText)`
+align-self: flex-start;
+`;
 
 const JobTitle = styled(AnimatedText)`
   span {
@@ -163,9 +178,58 @@ const JobTitle = styled(AnimatedText)`
 const ContainerText = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin-bottom:80px;
+  margin-bottom: 80px;
+`;
+
+const ContactButton = styled.a`
+display: inline-block;
+margin-top: 20px;
+padding: 10px 20px;
+background-color: #FFDEE4;
+color: black;
+font-size: 16px;
+text-decoration: none;
+border-radius: 20px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+
+&:hover {
+  background-color: white
+}
+`;
+
+const ScrollDownButton = styled.a`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #FFDEE4; /* Change to your preferred color */
+  padding: 20px;
+  border-radius: 30%;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: white;
+  }
+
+  &::after {
+    content: ' ';
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 export default Accueil;
