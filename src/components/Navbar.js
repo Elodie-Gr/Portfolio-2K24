@@ -39,7 +39,7 @@ const Navbar = () => {
       <NavList>
         <NavItem onClick={() => smoothScrollTo('accueil')}>
         <a href="#apropos" style={{ color: 'white', textDecoration: 'none' }}>
-          Qui suis-je
+          Qui suis-je ?
         </a>
         </NavItem>
         <NavItem onClick={() => smoothScrollTo('apropos')}>
