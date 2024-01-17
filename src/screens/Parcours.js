@@ -10,11 +10,11 @@ const Parcours = () => {
     const title = titleRef.current;
 
     if (inView) {
-      animateText(title);
+      animateTextParcours(title);
     }
   }, [inView]);
 
-  const animateText = (ref) => {
+  const animateTextParcours = (ref) => {
     const text = ref.textContent;
     const letters = text.split('');
 
@@ -70,7 +70,9 @@ const AnimatedText = styled.span`
 `;
 
 const ParcoursContainer = styled.div`
+  position: relative;
   width: 100%;
+  min-height: 100vh;
   height: 100vh;
   background-color: black;
   display: flex;

@@ -10,11 +10,11 @@ const Contact = () => {
     const title = titleRef.current;
 
     if (inView) {
-      animateText(title);
+      animateTextContact(title);
     }
   }, [inView]);
 
-  const animateText = (ref) => {
+  const animateTextContact = (ref) => {
     const text = ref.textContent;
     const letters = text.split('');
 
@@ -70,7 +70,9 @@ const AnimatedText = styled.span`
 `;
 
 const ContactContainer = styled.div`
+  position: relative;
   width: 100%;
+  min-height: 100vh;
   height: 100vh;
   background-color: black;
   display: flex;

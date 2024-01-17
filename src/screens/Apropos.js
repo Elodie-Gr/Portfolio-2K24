@@ -4,17 +4,19 @@ import { useInView } from 'react-intersection-observer';
 
 const Apropos = () => {
   const titleRef = useRef();
+  const cloudsCanvasRef = useRef();
   const [inViewRef, inView] = useInView();
 
   useEffect(() => {
     const title = titleRef.current;
 
     if (inView) {
-      animateText(title);
+      animateTextApropos(title);
+      animateCloudsApropos(cloudsCanvasRef.current); 
     }
   }, [inView]);
 
-  const animateText = (ref) => {
+  const animateTextApropos = (ref) => {
     const text = ref.textContent;
     const letters = text.split('');
 
@@ -28,14 +30,108 @@ const Apropos = () => {
     });
   };
 
+  const animateCloudsApropos = (canvas) => {
+    const ctx = canvas.getContext('2d');
+    const clouds = [];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    for (let i = 0; i < 5; i++) {
+      let cloud;
+      do {
+        cloud = {
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height * 0.5,
+          width: Math.random() * 70 + 100,
+          height: Math.random() * 50 + 20,
+          opacity: Math.random() * 0.5 + 0.3,
+        };
+      } while (clouds.some(existingCloud => distance(cloud, existingCloud) < cloud.width + existingCloud.width));
+
+      clouds.push(cloud);
+    }
+
+    function distance(point1, point2) {
+      const dx = point1.x - point2.x;
+      const dy = point1.y - point2.y;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function drawClouds() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const cloud of clouds) {
+        const wavePoints = createWavePoints(cloud);
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 255, 255, ${cloud.opacity})`;
+
+        for (const point of wavePoints) {
+          ctx.ellipse(
+            point.x,
+            point.y,
+            cloud.width / 2,
+            cloud.height / 2,
+            0,
+            0,
+            2 * Math.PI
+          );
+        }
+
+        ctx.fill();
+      }
+    }
+
+    function createWavePoints(cloud) {
+      const points = [];
+      const waveFrequency = 0.1;
+      const waveAmplitude = 10;
+
+      for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
+        const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
+        points.push({ x, y });
+      }
+
+      return points;
+    }
+
+    function animateClouds() {
+      drawClouds();
+
+      for (const cloud of clouds) {
+        cloud.x += 0.1;
+
+        if (cloud.x > canvas.width) {
+          cloud.x = -cloud.width;
+        }
+      }
+
+      requestAnimationFrame(animateClouds);
+    }
+
+    animateClouds();
+  };
+
   return (
     <AproposContainer>
+      <CloudsCanvas ref={cloudsCanvasRef}></CloudsCanvas>
       <TitleContainer>
         <Title ref={(node) => { inViewRef(node); titleRef.current = node; }}>Qui suis-je ?</Title>
       </TitleContainer>
     </AproposContainer>
   );
 };
+
+const CloudsCanvas = styled.canvas`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  pointer-events: none;
+  margin-top:50px;
+`;
 
 const fadeIn = keyframes`
   from {
@@ -70,7 +166,9 @@ const AnimatedText = styled.span`
 `;
 
 const AproposContainer = styled.div`
+  position: relative;
   width: 100%;
+  min-height: 100vh;
   height: 100vh;
   background-color: black;
   display: flex;
