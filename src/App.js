@@ -1,28 +1,46 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import GlobalStyles from './GlobalStyles';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Accueil from './screens/Accueil';
-import QuiSuisJe from './screens/Apropos';
+import Apropos from './screens/Apropos';
 import Parcours from './screens/Parcours';
 import Competences from './screens/Competences';
 import Projets from './screens/Projets';
 import Contact from './screens/Contact';
-import GlobalStyles from './GlobalStyles';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <GlobalStyles />
+    <div>
+      <GlobalStyles />
+      <Navbar />
+      
+      <section id="accueil">
         <Accueil />
-        <Routes>
-          <Route path="/qui-suis-je" component={QuiSuisJe} />
-          <Route path="/parcours" component={Parcours} />
-          <Route path="/competences" component={Competences} />
-          <Route path="/projets" component={Projets} />
-          <Route path="/contact" component={Contact} />
-        </Routes>
-      </div>
-    </Router>
+      </section>
+      
+      <section id="apropos">
+        <Apropos />
+      </section>
+
+      <section id="parcours">
+        <Parcours />
+      </section>
+
+      <section id="competences">
+        <Competences />
+      </section>
+
+      <section id="projets">
+        <Projets />
+      </section>
+
+      <section id="contact">
+        <Contact />
+      </section>
+
+      <Footer />
+    </div>
   );
 }
 

@@ -1,37 +1,66 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect }  from 'react';
 import styled from 'styled-components';
 import LogoImage from '../images/4.png';
 
 const Navbar = () => {
+  const [isNavbarFixed, setIsNavbarFixed] = useState(false);
+
+  const handleScroll = () => {
+    const offset = window.scrollY;
+    const threshold = 50;
+
+    if (offset > threshold) {
+      setIsNavbarFixed(true);
+    } else {
+      setIsNavbarFixed(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const smoothScrollTo = (targetId) => {
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
-    <NavbarContainer>
+    <NavbarContainer isFixed={isNavbarFixed}>
       <Logo src={LogoImage} alt="Logo" />
       <NavList>
-        <NavItem>
-          <Link to="/qui-suis-je" style={{ color: 'white', textDecoration: 'none' }}>
-            Qui suis-je
-          </Link>
+        <NavItem onClick={() => smoothScrollTo('accueil')}>
+        <a href="#apropos" style={{ color: 'white', textDecoration: 'none' }}>
+          Qui suis-je
+        </a>
         </NavItem>
-        <NavItem>
-          <Link to="/parcours" style={{ color: 'white', textDecoration: 'none' }}>
-            Parcours
-          </Link>
+        <NavItem onClick={() => smoothScrollTo('apropos')}>
+        <a href="#parcours" style={{ color: 'white', textDecoration: 'none' }}>
+          Parcours
+        </a>
         </NavItem>
-        <NavItem>
-          <Link to="/competences" style={{ color: 'white', textDecoration: 'none' }}>
-            Compétences
-          </Link>
+        <NavItem onClick={() => smoothScrollTo('parcours')}>
+        <a href="#competences" style={{ color: 'white', textDecoration: 'none' }}>
+          Compétences
+        </a>
         </NavItem>
-        <NavItem>
-          <Link to="/projets" style={{ color: 'white', textDecoration: 'none' }}>
-            Projets
-          </Link>
+        <NavItem onClick={() => smoothScrollTo('projets')}>
+        <a href="#projets" style={{ color: 'white', textDecoration: 'none' }}>
+          Projets
+        </a>
         </NavItem>
-        <NavItem>
-          <Link to="/contact" style={{ color: 'white', textDecoration: 'none' }}>
-            Contact
-          </Link>
+        <NavItem onClick={() => smoothScrollTo('contact')}>
+        <a href="#contact" style={{ color: 'white', textDecoration: 'none' }}>
+          Contact
+        </a>
         </NavItem>
       </NavList>
     </NavbarContainer>
@@ -44,6 +73,11 @@ const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: ${props => (props.isFixed ? 'fixed' : 'relative')};
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
 `;
 
 const Logo = styled.img`

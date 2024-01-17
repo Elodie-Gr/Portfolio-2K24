@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 
 const Accueil = () => {
   const nameRef = useRef();
@@ -88,7 +86,6 @@ const Accueil = () => {
 
   return (
     <AccueilContainer>
-      <Navbar />
       <TextContainer>
       <Canvas ref={canvasRef}></Canvas>
       <ContainerText>
@@ -206,13 +203,12 @@ const ScrollDownButton = styled.a`
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #FFDEE4; /* Change to your preferred color */
+  background-color: #FFDEE4;
   padding: 20px;
-  border-radius: 30%;
+  border-radius: 50%;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: white;
   }
@@ -224,7 +220,7 @@ const ScrollDownButton = styled.a`
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 15px solid white;
+    border-top: 15px solid black;
     position: absolute;
     top: 50%;
     left: 50%;
