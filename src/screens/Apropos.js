@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { useInView } from 'react-intersection-observer';
+import Anagram from 'react-anagram-animation';
 
 const Apropos = () => {
   const titleRef = useRef();
@@ -12,7 +13,7 @@ const Apropos = () => {
 
     if (inView) {
       animateTextApropos(title);
-      animateCloudsApropos(cloudsCanvasRef.current); 
+      animateCloudsApropos(cloudsCanvasRef.current);
     }
   }, [inView]);
 
@@ -30,6 +31,9 @@ const Apropos = () => {
     });
   };
 
+
+  
+  
   const animateCloudsApropos = (canvas) => {
     const ctx = canvas.getContext('2d');
     const clouds = [];
@@ -119,6 +123,16 @@ const Apropos = () => {
       <TitleContainer>
         <Title ref={(node) => { inViewRef(node); titleRef.current = node; }}>Qui suis-je ?</Title>
       </TitleContainer>
+      <ParagraphContainer>
+        <Paragraph>
+      <Anagram words={['Bonjour ! Je suis Elodie.', 
+                       'jourBon ! ej isus diloee.']} />
+                        <Anagram words={['Actuellement Apprentie développeuse web junior,', 
+                       'teelucatelmn prniApete eupoeédsplve wbe rjunio,']} />
+                        <Anagram words={['j\'effectue ma dernière année de mastère expert en développement web.', 
+                       'j\'eecuftfe am eènrderi néane ed tsamère xeeptr ne teeplvdéeopmn ewb.']} />
+      </Paragraph>
+      </ParagraphContainer>
     </AproposContainer>
   );
 };
@@ -130,7 +144,7 @@ const CloudsCanvas = styled.canvas`
   width: 100%;
   height: 90%;
   pointer-events: none;
-  margin-top:50px;
+  margin-top: 50px;
 `;
 
 const fadeIn = keyframes`
@@ -160,6 +174,9 @@ const AnimatedText = styled.span`
     display: inline-block;
     opacity: 0;
     animation: ${fadeIn} 0.5s ease-in-out forwards;
+    &.shuffle-animation {
+      transition: transform 1s ease-in-out; // Transition de 1 seconde
+    }
   }
 
   ${({ hide }) => hide && hideText};
@@ -172,18 +189,29 @@ const AproposContainer = styled.div`
   height: 100vh;
   background-color: black;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 `;
 
 const TitleContainer = styled.div`
-  width: 100%;
-  text-align: center;
-  margin-top: 200px;
+width: 100%;
+text-align: center;
+margin-top: 30px;
 `;
 
 const Title = styled(AnimatedText)`
   letter-spacing: 4px;
+`;
+
+const ParagraphContainer = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-top: 150px;
+`;
+
+const Paragraph = styled(AnimatedText)`
+  font-size: 1.5em;
 `;
 
 export default Apropos;
