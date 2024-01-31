@@ -1,10 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { useInView } from 'react-intersection-observer';
+import Arbre from '../images/arbre.png';
 
 const Parcours = () => {
   const titleRef = useRef();
   const [inViewRef, inView] = useInView();
+
+  const TextParcoursMRef = useRef();
+  const TextParcoursMR = useRef();
+  const TextParcoursRefLP = useRef();
+  const TextParcoursRefLPR = useRef();
+  const TextParcoursRefBTS = useRef();
+  const TextParcoursRefBTSR = useRef();
+  const [leftInViewRef, leftInView] = useInView();
+  const [rightInViewRef, rightInView] = useInView();
+  const [leftInViewRefLP, leftInViewLP] = useInView();
+  const [rightInViewRefLP, rightInViewLP] = useInView();
+  const [leftInViewRefBTS, leftInViewBTS] = useInView();
+  const [rightInViewRefBTS, rightInViewBTS] = useInView();
 
   useEffect(() => {
     const title = titleRef.current;
@@ -12,7 +26,41 @@ const Parcours = () => {
     if (inView) {
       animateTextParcours(title);
     }
-  }, [inView]);
+
+    const TextParcoursM = TextParcoursMRef.current;
+    const TextParcoursMRR = TextParcoursMR.current;
+    const TextParcoursLP = TextParcoursRefLP.current;
+    const TextParcoursPR = TextParcoursRefLPR.current;
+    const TextParcoursBTS = TextParcoursRefBTS.current;
+    const TextParcoursBTSR = TextParcoursRefBTSR.current;
+
+    if (leftInView) {
+      animateTextParcours(TextParcoursM);
+    }
+
+    if (rightInView) {
+      animateTextParcours(TextParcoursMRR);
+    }
+
+    if (leftInViewLP) {
+      animateTextParcours(TextParcoursLP);
+    }
+
+    if (rightInViewLP) {
+      animateTextParcours(TextParcoursPR);
+    }
+    if (leftInViewLP) {
+      animateTextParcours(TextParcoursLP);
+    }
+
+    if (rightInViewBTS) {
+      animateTextParcours(TextParcoursBTSR);
+    }
+
+    if (leftInViewBTS) {
+      animateTextParcours(TextParcoursBTS);
+    }
+  }, [inView, leftInView, rightInView, leftInViewLP, rightInViewLP, leftInViewBTS, rightInViewBTS]);
 
   const animateTextParcours = (ref) => {
     const text = ref.textContent;
@@ -33,6 +81,21 @@ const Parcours = () => {
       <TitleContainer>
         <Title ref={(node) => { inViewRef(node); titleRef.current = node; }}>Parcours</Title>
       </TitleContainer>
+      <ContentContainer>
+        <RowContainer>
+        {/* Textes à gauche */}
+        <TextParcoursM ref={(node) => { leftInViewRef(node); TextParcoursMRef.current = node; }}>2022-2024</TextParcoursM>
+        <TextParcoursLP ref={(node) => { leftInViewRefLP(node); TextParcoursRefLP.current = node; }}>2021-2022</TextParcoursLP>
+        <TextParcoursBTS ref={(node) => { leftInViewRefBTS(node); TextParcoursRefBTS.current = node; }}>2019-2021</TextParcoursBTS>
+        </RowContainer>
+        <Image src={Arbre} />
+        <RowContainer>
+          {/* Textes à droite */}
+        <TextParcoursMRR ref={(node) => { rightInViewRef(node); TextParcoursMR.current = node; }}>2022-2024</TextParcoursMRR>
+        <TextParcoursPR ref={(node) => { rightInViewRefLP(node); TextParcoursRefLPR.current = node; }}>2021-2022</TextParcoursPR>
+        <TextParcoursBTSR ref={(node) => { rightInViewRefBTS(node); TextParcoursRefBTSR.current = node; }}>2019-2021</TextParcoursBTSR>
+        </RowContainer>
+      </ContentContainer>
     </ParcoursContainer>
   );
 };
@@ -55,7 +118,7 @@ const hideText = css`
 
 const AnimatedText = styled.span`
   color: white;
-  font-size: 3em;
+  font-size: 1.5em;
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
@@ -76,18 +139,75 @@ const ParcoursContainer = styled.div`
   height: 100vh;
   background-color: black;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
 `;
 
 const TitleContainer = styled.div`
-  width: 100%;
   text-align: center;
-  margin-top: 200px;
+  margin-top: 20px;
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Title = styled(AnimatedText)`
   letter-spacing: 4px;
+  font-size: 3em;
+  margin-bottom: 20px;
 `;
 
+const Image = styled.img`
+  max-width: 100%;
+  max-height: 60vh;
+  width: auto;
+  height: auto;
+  margin: 20px;
+`;
+
+const RowContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const TextParcoursM = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-right: 20px;
+  padding-bottom:100px;
+`;
+
+const TextParcoursMRR = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-left: 20px;
+  padding-bottom:100px;
+`;
+
+const TextParcoursLP = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-right: 20px;
+  padding-top:50px;
+`;
+
+const TextParcoursPR = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-left: 20px;
+  padding-top:50px;
+`;
+const TextParcoursBTS = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-right: 20px;
+  padding-top:200px;
+`;
+
+const TextParcoursBTSR = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-left: 20px;
+  padding-top:200px;
+`;
 export default Parcours;
