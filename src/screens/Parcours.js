@@ -13,12 +13,31 @@ const Parcours = () => {
   const TextParcoursRefLPR = useRef();
   const TextParcoursRefBTS = useRef();
   const TextParcoursRefBTSR = useRef();
+  const TextParcoursRefTitleL = useRef();
+  const TextParcoursRefTitleR = useRef();
   const [leftInViewRef, leftInView] = useInView();
   const [rightInViewRef, rightInView] = useInView();
   const [leftInViewRefLP, leftInViewLP] = useInView();
   const [rightInViewRefLP, rightInViewLP] = useInView();
   const [leftInViewRefBTS, leftInViewBTS] = useInView();
   const [rightInViewRefBTS, rightInViewBTS] = useInView();
+  const [leftInViewRefTitleL, leftInViewRefTitle] = useInView();
+  const [rightInViewRefTitleR, rightInViewTitle] = useInView();
+
+    //Pour les titres
+    const animateTextParcours = (ref) => {
+      const text = ref.textContent;
+      const letters = text.split('');
+  
+      ref.textContent = '';
+  
+      letters.forEach((letter, index) => {
+        const span = document.createElement('span');
+        span.textContent = letter === ' ' ? '\u00A0' : letter;
+        span.style.animationDelay = `${index * 0.1}s`;
+        ref.appendChild(span);
+      });
+    };
 
   useEffect(() => {
     const title = titleRef.current;
@@ -33,6 +52,8 @@ const Parcours = () => {
     const TextParcoursPR = TextParcoursRefLPR.current;
     const TextParcoursBTS = TextParcoursRefBTS.current;
     const TextParcoursBTSR = TextParcoursRefBTSR.current;
+    const TextParcoursTitleL = TextParcoursRefTitleL.current;
+    const TextParcoursTitleR = TextParcoursRefTitleR.current;
 
     if (leftInView) {
       animateTextParcours(TextParcoursM);
@@ -60,21 +81,17 @@ const Parcours = () => {
     if (leftInViewBTS) {
       animateTextParcours(TextParcoursBTS);
     }
-  }, [inView, leftInView, rightInView, leftInViewLP, rightInViewLP, leftInViewBTS, rightInViewBTS]);
 
-  const animateTextParcours = (ref) => {
-    const text = ref.textContent;
-    const letters = text.split('');
+    if (rightInViewTitle) {
+      animateTextParcours(TextParcoursTitleR);
+    }
 
-    ref.textContent = '';
+    if (leftInViewRefTitle) {
+      animateTextParcours(TextParcoursTitleL);
+    }
 
-    letters.forEach((letter, index) => {
-      const span = document.createElement('span');
-      span.textContent = letter === ' ' ? '\u00A0' : letter;
-      span.style.animationDelay = `${index * 0.1}s`;
-      ref.appendChild(span);
-    });
-  };
+  }, [inView, leftInView, rightInView, leftInViewLP, rightInViewLP, leftInViewBTS, rightInViewBTS, rightInViewTitle, leftInViewRefTitle]);
+
 
   return (
     <ParcoursContainer>
@@ -84,13 +101,15 @@ const Parcours = () => {
       <ContentContainer>
         <RowContainer>
         {/* Textes à gauche */}
+        <TextParcoursTitleL ref={(node) => { leftInViewRefTitleL(node); TextParcoursRefTitleL.current = node; }}>Scolaire</TextParcoursTitleL>
         <TextParcoursM ref={(node) => { leftInViewRef(node); TextParcoursMRef.current = node; }}>2022-2024</TextParcoursM>
         <TextParcoursLP ref={(node) => { leftInViewRefLP(node); TextParcoursRefLP.current = node; }}>2021-2022</TextParcoursLP>
         <TextParcoursBTS ref={(node) => { leftInViewRefBTS(node); TextParcoursRefBTS.current = node; }}>2019-2021</TextParcoursBTS>
         </RowContainer>
         <Image src={Arbre} />
         <RowContainer>
-          {/* Textes à droite */}
+        {/* Textes à droite */}
+        <TextParcoursTitleR ref={(node) => { rightInViewRefTitleR(node); TextParcoursRefTitleR.current = node; }}>Professionnel</TextParcoursTitleR>
         <TextParcoursMRR ref={(node) => { rightInViewRef(node); TextParcoursMR.current = node; }}>2022-2024</TextParcoursMRR>
         <TextParcoursPR ref={(node) => { rightInViewRefLP(node); TextParcoursRefLPR.current = node; }}>2021-2022</TextParcoursPR>
         <TextParcoursBTSR ref={(node) => { rightInViewRefBTS(node); TextParcoursRefBTSR.current = node; }}>2019-2021</TextParcoursBTSR>
@@ -100,6 +119,7 @@ const Parcours = () => {
   );
 };
 
+  
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -131,7 +151,7 @@ const AnimatedText = styled.span`
 
   ${({ hide }) => hide && hideText};
 `;
-
+  
 const ParcoursContainer = styled.div`
   position: relative;
   width: 100%;
@@ -179,35 +199,49 @@ const RowContainer = styled.div`
 const TextParcoursM = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-right: 20px;
-  padding-bottom:100px;
+  padding-bottom:80px;
 `;
 
 const TextParcoursMRR = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-left: 20px;
-  padding-bottom:100px;
+  padding-bottom:80px;
 `;
 
 const TextParcoursLP = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-right: 20px;
-  padding-top:50px;
+  padding-top:30px;
 `;
 
 const TextParcoursPR = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-left: 20px;
-  padding-top:50px;
+  padding-top:30px;
 `;
+
 const TextParcoursBTS = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-right: 20px;
-  padding-top:200px;
+  padding-top:140px;
 `;
 
 const TextParcoursBTSR = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-left: 20px;
-  padding-top:200px;
+  padding-top:140px;
 `;
+
+const TextParcoursTitleL = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-right: 20px;
+  padding-bottom:80px;
+`;
+
+const TextParcoursTitleR = styled(AnimatedText)`
+  letter-spacing: 2px;
+  margin-left: 20px;
+  padding-bottom:80px;
+`;
+
 export default Parcours;
