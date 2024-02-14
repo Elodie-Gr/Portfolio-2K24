@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { useInView } from 'react-intersection-observer';
-import Arbre from '../images/arbre.png';
+import Arbre from '../images/tree.png';
 
 const Parcours = () => {
   const titleRef = useRef();
@@ -12,7 +12,6 @@ const Parcours = () => {
   const [leftInViewRefTitleL, leftInViewRefTitle] = useInView();
   const [rightInViewRefTitleR, rightInViewTitle] = useInView();
 
-    //Pour les titres
     const animateTextParcours = (ref) => {
       const text = ref.textContent;
       const letters = text.split('');
@@ -76,7 +75,7 @@ const WavyTextAnimation = ({ text }) => {
       <ContentContainer>
         <RowContainer>
         {/* Textes à gauche */}
-        <TextParcoursTitleL ref={(node) => { leftInViewRefTitleL(node); TextParcoursRefTitleL.current = node; }}>Scolaire</TextParcoursTitleL>
+        <TextParcoursTitleL ref={(node) => { leftInViewRefTitleL(node); TextParcoursRefTitleL.current = node; }}>Formation</TextParcoursTitleL>
         <WavyTextAnimation text="2022-2024 : Mastère expert | en développement web à YNOV" />
         <WavyTextAnimation text="2021-2022 : Licence Professionnelle| Programmation Internet et| Systèmes Mobiles à l'IUT d'Orsay" />
         <WavyTextAnimation text="2019-2021 : BTS SIO SLAM à |l'ISCIO d'Orsay" />
@@ -198,12 +197,14 @@ const TextParcoursTitleL = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-right: 20px;
   padding-bottom:80px;
+  font-weight: bold;
 `;
 
 const TextParcoursTitleR = styled(AnimatedText)`
   letter-spacing: 2px;
   margin-left: 20px;
   padding-bottom:80px;
+  font-weight: bold;
 `;
 
 export default Parcours;
