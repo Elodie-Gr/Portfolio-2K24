@@ -7,20 +7,8 @@ const Parcours = () => {
   const titleRef = useRef();
   const [inViewRef, inView] = useInView();
 
-  const TextParcoursMRef = useRef();
-  const TextParcoursMR = useRef();
-  const TextParcoursRefLP = useRef();
-  const TextParcoursRefLPR = useRef();
-  const TextParcoursRefBTS = useRef();
-  const TextParcoursRefBTSR = useRef();
   const TextParcoursRefTitleL = useRef();
   const TextParcoursRefTitleR = useRef();
-  const [leftInViewRef, leftInView] = useInView();
-  const [rightInViewRef, rightInView] = useInView();
-  const [leftInViewRefLP, leftInViewLP] = useInView();
-  const [rightInViewRefLP, rightInViewLP] = useInView();
-  const [leftInViewRefBTS, leftInViewBTS] = useInView();
-  const [rightInViewRefBTS, rightInViewBTS] = useInView();
   const [leftInViewRefTitleL, leftInViewRefTitle] = useInView();
   const [rightInViewRefTitleR, rightInViewTitle] = useInView();
 
@@ -39,48 +27,35 @@ const Parcours = () => {
       });
     };
 
+
+const WavyTextAnimation = ({ text }) => {
+  return (
+    <WavyText  style={{ marginBottom: '150px' }}>
+        {text.split('').map((letter, index) => {
+        if (letter === ' ') {
+          return '\u00A0'; 
+        } else if (letter === '|') { 
+          return <br key={index} />;
+        } else {
+          return (
+            <AnimatedLetter key={index} delay={`0.${index}s`}>
+              {letter}
+            </AnimatedLetter>
+          );
+        }
+      })}
+    </WavyText>
+  );
+};
+
   useEffect(() => {
     const title = titleRef.current;
 
     if (inView) {
       animateTextParcours(title);
     }
-
-    const TextParcoursM = TextParcoursMRef.current;
-    const TextParcoursMRR = TextParcoursMR.current;
-    const TextParcoursLP = TextParcoursRefLP.current;
-    const TextParcoursPR = TextParcoursRefLPR.current;
-    const TextParcoursBTS = TextParcoursRefBTS.current;
-    const TextParcoursBTSR = TextParcoursRefBTSR.current;
     const TextParcoursTitleL = TextParcoursRefTitleL.current;
     const TextParcoursTitleR = TextParcoursRefTitleR.current;
-
-    if (leftInView) {
-      animateTextParcours(TextParcoursM);
-    }
-
-    if (rightInView) {
-      animateTextParcours(TextParcoursMRR);
-    }
-
-    if (leftInViewLP) {
-      animateTextParcours(TextParcoursLP);
-    }
-
-    if (rightInViewLP) {
-      animateTextParcours(TextParcoursPR);
-    }
-    if (leftInViewLP) {
-      animateTextParcours(TextParcoursLP);
-    }
-
-    if (rightInViewBTS) {
-      animateTextParcours(TextParcoursBTSR);
-    }
-
-    if (leftInViewBTS) {
-      animateTextParcours(TextParcoursBTS);
-    }
 
     if (rightInViewTitle) {
       animateTextParcours(TextParcoursTitleR);
@@ -90,7 +65,7 @@ const Parcours = () => {
       animateTextParcours(TextParcoursTitleL);
     }
 
-  }, [inView, leftInView, rightInView, leftInViewLP, rightInViewLP, leftInViewBTS, rightInViewBTS, rightInViewTitle, leftInViewRefTitle]);
+  }, [inView, rightInViewTitle, leftInViewRefTitle]);
 
 
   return (
@@ -102,24 +77,23 @@ const Parcours = () => {
         <RowContainer>
         {/* Textes à gauche */}
         <TextParcoursTitleL ref={(node) => { leftInViewRefTitleL(node); TextParcoursRefTitleL.current = node; }}>Scolaire</TextParcoursTitleL>
-        <TextParcoursM ref={(node) => { leftInViewRef(node); TextParcoursMRef.current = node; }}>2022-2024</TextParcoursM>
-        <TextParcoursLP ref={(node) => { leftInViewRefLP(node); TextParcoursRefLP.current = node; }}>2021-2022</TextParcoursLP>
-        <TextParcoursBTS ref={(node) => { leftInViewRefBTS(node); TextParcoursRefBTS.current = node; }}>2019-2021</TextParcoursBTS>
+        <WavyTextAnimation text="2022-2024 : Mastère expert | en développement web à YNOV" />
+        <WavyTextAnimation text="2021-2022 : Licence Professionnelle| Programmation Internet et| Systèmes Mobiles à l'IUT d'Orsay" />
+        <WavyTextAnimation text="2019-2021 : BTS SIO SLAM à |l'ISCIO d'Orsay" />
         </RowContainer>
         <Image src={Arbre} />
         <RowContainer>
         {/* Textes à droite */}
         <TextParcoursTitleR ref={(node) => { rightInViewRefTitleR(node); TextParcoursRefTitleR.current = node; }}>Professionnel</TextParcoursTitleR>
-        <TextParcoursMRR ref={(node) => { rightInViewRef(node); TextParcoursMR.current = node; }}>2022-2024</TextParcoursMRR>
-        <TextParcoursPR ref={(node) => { rightInViewRefLP(node); TextParcoursRefLPR.current = node; }}>2021-2022</TextParcoursPR>
-        <TextParcoursBTSR ref={(node) => { rightInViewRefBTS(node); TextParcoursRefBTSR.current = node; }}>2019-2021</TextParcoursBTSR>
+        <WavyTextAnimation text="2022-2024 : Apprentie développeuse web |et mobile chez SMS Management" />
+        <WavyTextAnimation text="2021-2022 : Apprentie développeuse web |et mobile chez SMS Management" />
+        <WavyTextAnimation text="2019-2021 : Technicienne HELPDESK| et maintenance logiciel chez Anaël" />
         </RowContainer>
       </ContentContainer>
     </ParcoursContainer>
   );
 };
 
-  
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -129,6 +103,30 @@ const fadeIn = keyframes`
     opacity: 1;
     transform: translateX(0);
   }
+`;
+
+const waveAnimation = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  75% {
+    transform: translateY(5px);
+  }
+`;
+
+const WavyText = styled.div`
+  display: inline-block;
+  font-size: 24px;
+  color: white;
+`;
+
+const AnimatedLetter = styled.span`
+  display: inline-block;
+  animation: ${waveAnimation} 4s ease-in-out infinite;
+  animation-delay: ${(props) => props.delay};
 `;
 
 const hideText = css`
@@ -194,42 +192,6 @@ const RowContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`;
-
-const TextParcoursM = styled(AnimatedText)`
-  letter-spacing: 2px;
-  margin-right: 20px;
-  padding-bottom:80px;
-`;
-
-const TextParcoursMRR = styled(AnimatedText)`
-  letter-spacing: 2px;
-  margin-left: 20px;
-  padding-bottom:80px;
-`;
-
-const TextParcoursLP = styled(AnimatedText)`
-  letter-spacing: 2px;
-  margin-right: 20px;
-  padding-top:30px;
-`;
-
-const TextParcoursPR = styled(AnimatedText)`
-  letter-spacing: 2px;
-  margin-left: 20px;
-  padding-top:30px;
-`;
-
-const TextParcoursBTS = styled(AnimatedText)`
-  letter-spacing: 2px;
-  margin-right: 20px;
-  padding-top:140px;
-`;
-
-const TextParcoursBTSR = styled(AnimatedText)`
-  letter-spacing: 2px;
-  margin-left: 20px;
-  padding-top:140px;
 `;
 
 const TextParcoursTitleL = styled(AnimatedText)`

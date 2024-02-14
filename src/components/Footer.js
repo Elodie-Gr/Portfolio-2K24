@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <CopyrightContainer>
-        <span>&copy; 2023 Elodie GEORGES. Tous droits réservés.</span>
+        <span>&copy; 2024 Elodie GEORGES. Tous droits réservés.</span>
       </CopyrightContainer>
     </FooterContainer>
   );
