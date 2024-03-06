@@ -96,7 +96,7 @@ const Accueil = () => {
         <ContactButton to="/contact">Me contacter</ContactButton>
       </ContainerText>
       </TextContainer>
-      <ScrollDownButton href="/qui-suis-je" />
+      <ScrollDownButton href="/apropos" />
     </AccueilContainer>
   );
 };
