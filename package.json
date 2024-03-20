@@ -10,6 +10,7 @@
     "react-anagram-animation": "^1.4.0",
     "react-carousel3": "^1.0.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
     "react-intersection-observer": "^9.5.3",
     "react-multi-carousel": "^2.8.4",
     "react-native-gesture-handler": "^2.15.0",

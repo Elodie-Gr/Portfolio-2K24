@@ -3,6 +3,13 @@ import styled, { keyframes, css } from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import CarteMonde from '../images/carteMonde.jpg';
+import Bookolect from '../images/bookolect.jpg';
+import GuideTouristique from '../images/guide.png';
+import Tickat from '../images/tickat.png';
+import QrCode from '../images/qrcode.jpg';
+import Formulaire from '../images/formulaire.jpg';
+import { MdClose } from 'react-icons/md';
 
 const Projet = () => {
   const titleRef = useRef();
@@ -71,46 +78,46 @@ const Projet = () => {
         >
           {/* Contenu du carrousel */}
           <CarouselItem
-            onClick={() => openModal({ title: "Titre de l'élément 1", description: "Description de l'élément 1" })}
+            onClick={() => openModal({ title: "Apprendre les pays", description: "Application mobile en React Native", image: CarteMonde })}
           >
-            <img src="https://via.placeholder.com/300" alt="placeholder" />
-            <TitleItem>Titre de l'élément 1</TitleItem>
-            <DescriptionItem>Description de l'élément 1</DescriptionItem>
+            <CarouselImage src={CarteMonde} alt="Carte du monde" />
+            <TitleItem>Countriestive - Apprendre les pays par coeur</TitleItem>
+            <DescriptionItem>Application mobile en React Native</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Titre de l'élément 2", description: "Description de l'élément 2" })}
+            onClick={() => openModal({ title: "Bookolect - gérer sa bibliothèque de livres", description: "Application mobile avec Flutter", image: Bookolect })}
           >
-            <img src="https://via.placeholder.com/300" alt="placeholder" />
-            <TitleItem>Titre de l'élément 2</TitleItem>
-            <DescriptionItem>Description de l'élément 2</DescriptionItem>
+            <CarouselImage src={Bookolect} alt="Livres" />
+            <TitleItem>Bookolect - gérer sa bibliothèque de livres</TitleItem>
+            <DescriptionItem>Application mobile avec Flutter</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Titre de l'élément 3", description: "Description de l'élément 3" })}
+            onClick={() => openModal({ title: "Guide touristique des villes de France", description: "Site web avec l'outil Notion", image: GuideTouristique })}
           >
-            <img src="https://via.placeholder.com/300" alt="placeholder" />
-            <TitleItem>Titre de l'élément 3</TitleItem>
-            <DescriptionItem>Description de l'élément 3</DescriptionItem>
+            <CarouselImage src={GuideTouristique} alt="Guide touristique" />
+            <TitleItem>Guide touristique des villes de France</TitleItem>
+            <DescriptionItem>Site web avec l'outil Notion</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Titre de l'élément 4", description: "Description de l'élément 4" })}
+            onClick={() => openModal({ title: "Tickat - Outil de ticketting pour les entreprises", description: "Site web en HTML, CSS, Javascript et PHP", image: Tickat })}
           >
-            <img src="https://via.placeholder.com/300" alt="placeholder" />
-            <TitleItem>Titre de l'élément 4</TitleItem>
-            <DescriptionItem>Description de l'élément 4</DescriptionItem>
+            <CarouselImage src={Tickat} alt="Tickat" />
+            <TitleItem>Tickat - Outil de ticketting pour les entreprises</TitleItem>
+            <DescriptionItem>Site web en HTML, CSS, Javascript et PHP</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Titre de l'élément 5", description: "Description de l'élément 5" })}
+            onClick={() => openModal({ title: "Module de pointage par QR Code pour les salariés", description: "Module utilisant C# avec l'architecture MVC et l'outil Telerik Reporting Designer", image: QrCode })}
           >
-            <img src="https://via.placeholder.com/300" alt="placeholder" />
-            <TitleItem>Titre de l'élément 5</TitleItem>
-            <DescriptionItem>Description de l'élément 5</DescriptionItem>
+            <CarouselImage src={QrCode} alt="Qr Code" />
+            <TitleItem>Module de pointage par QR Code pour les salariés</TitleItem>
+            <DescriptionItem>Module utilisant C# avec l'architecture MVC</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Titre de l'élément 6", description: "Description de l'élément 6" })}
+            onClick={() => openModal({ title: "Formulaire de questions pour les salariés", description: "Application mobile Windev", image: Formulaire })}
           >
-            <img src="https://via.placeholder.com/300" alt="placeholder" />
-            <TitleItem>Titre de l'élément 6</TitleItem>
-            <DescriptionItem>Description de l'élément 6</DescriptionItem>
+            <CarouselImage src={Formulaire} alt="Formulaire" />
+            <TitleItem>Formulaire de questions pour les salariés</TitleItem>
+            <DescriptionItem>Application mobile Windev</DescriptionItem>
           </CarouselItem>
         </Carousel>
       </CarouselContainer>
@@ -118,9 +125,10 @@ const Projet = () => {
       {showModal && (
         <ModalContainer>
           <ModalContent>
+          <CloseButton onClick={closeModal}><MdClose/></CloseButton>
+            <img src={selectedItem.image} alt={selectedItem.title} style={{ width: "300px", height: "200px", marginBottom: "10px", marginTop: "20px"  }} />
             <h2>{selectedItem.title}</h2>
             <p>{selectedItem.description}</p>
-            <button onClick={closeModal}>Fermer</button>
           </ModalContent>
         </ModalContainer>
       )}
@@ -183,7 +191,7 @@ const Title = styled(AnimatedText)`
 `;
 
 const CarouselContainer = styled.div`
-  width: 80%;
+  width: 100%;
   max-width: 1000px;
   margin-top: 50px;
 `;
@@ -200,6 +208,11 @@ const CarouselItem = styled.div`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin: 0 10px;
   cursor: pointer;
+`;
+
+const CarouselImage = styled.img`
+  width: 300px;
+  height: 200px;
 `;
 
 const TitleItem = styled.h3`
@@ -230,6 +243,26 @@ const ModalContent = styled.div`
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+  position: relative;
+  display: flex; /* Ajout de flexbox */
+  flex-direction: column; /* Aligner les éléments en colonne */
+  align-items: center; /* Centrer horizontalement */
+  justify-content: center; /* Centrer verticalement */
+`;
+
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 20px;
 `;
 
 export default Projet;
