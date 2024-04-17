@@ -31,10 +31,59 @@ const Apropos = () => {
     });
   };
 
-
-  
-  
   const animateCloudsApropos = (canvas) => {
+    const drawClouds = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const cloud of clouds) {
+        const wavePoints = createWavePoints(cloud);
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 255, 255, ${cloud.opacity})`;
+
+        for (const point of wavePoints) {
+          ctx.ellipse(
+            point.x,
+            point.y,
+            cloud.width / 2,
+            cloud.height / 2,
+            0,
+            0,
+            2 * Math.PI
+          );
+        }
+
+        ctx.fill();
+      }
+    };
+
+    const createWavePoints = (cloud) => {
+      const points = [];
+      const waveFrequency = 0.1;
+      const waveAmplitude = 10;
+
+      for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
+        const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
+        points.push({ x, y });
+      }
+
+      return points;
+    };
+
+    const animateClouds = () => {
+      drawClouds();
+
+      for (const cloud of clouds) {
+        cloud.x += 0.1;
+
+        if (cloud.x > canvas.width) {
+          cloud.x = -cloud.width;
+        }
+      }
+
+      requestAnimationFrame(animateClouds);
+    };
+
     const ctx = canvas.getContext('2d');
     const clouds = [];
 
@@ -62,58 +111,6 @@ const Apropos = () => {
       return Math.sqrt(dx * dx + dy * dy);
     }
 
-    function drawClouds() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (const cloud of clouds) {
-        const wavePoints = createWavePoints(cloud);
-
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${cloud.opacity})`;
-
-        for (const point of wavePoints) {
-          ctx.ellipse(
-            point.x,
-            point.y,
-            cloud.width / 2,
-            cloud.height / 2,
-            0,
-            0,
-            2 * Math.PI
-          );
-        }
-
-        ctx.fill();
-      }
-    }
-
-    function createWavePoints(cloud) {
-      const points = [];
-      const waveFrequency = 0.1;
-      const waveAmplitude = 10;
-
-      for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
-        const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
-        points.push({ x, y });
-      }
-
-      return points;
-    }
-
-    function animateClouds() {
-      drawClouds();
-
-      for (const cloud of clouds) {
-        cloud.x += 0.1;
-
-        if (cloud.x > canvas.width) {
-          cloud.x = -cloud.width;
-        }
-      }
-
-      requestAnimationFrame(animateClouds);
-    }
-
     animateClouds();
   };
 
@@ -125,13 +122,10 @@ const Apropos = () => {
       </TitleContainer>
       <ParagraphContainer>
         <Paragraph>
-      <Anagram words={['Bonjour ! Je suis Elodie.', 
-                       'jourBon ! ej isus diloee.']} />
-                        <Anagram words={['Actuellement Apprentie développeuse web junior,', 
-                       'teelucatelmn prniApete eupoeédsplve wbe rjunio,']} />
-                        <Anagram words={['j\'effectue ma dernière année de mastère expert en développement web.', 
-                       'j\'eecuftfe am eènrderi néane ed tsamère xeeptr ne teeplvdéeopmn ewb.']} />
-      </Paragraph>
+          <Anagram words={['Bonjour ! Je suis Elodie.', 'jourBon ! ej isus diloee.']} />
+          <Anagram words={['Actuellement Apprentie développeuse web junior,', 'teelucatelmn prniApete eupoeédsplve wbe rjunio,']} />
+          <Anagram words={['j\'effectue ma dernière année de mastère expert en développement web.', 'j\'eecuftfe am eènrderi néane ed tsamère xeeptr ne teeplvdéeopmn ewb.']} />
+        </Paragraph>
       </ParagraphContainer>
     </AproposContainer>
   );
@@ -195,9 +189,9 @@ const AproposContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
-width: 100%;
-text-align: center;
-margin-top: 30px;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
 `;
 
 const Title = styled(AnimatedText)`
