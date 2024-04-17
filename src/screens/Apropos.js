@@ -5,50 +5,37 @@ import Anagram from 'react-anagram-animation';
 
 const Apropos = () => {
   const titleRef = useRef();
-  const cloudsCanvasRef = useRef();
+  //const cloudsCanvasRef = useRef();
   const [inViewRef, inView] = useInView();
 
-  const animateCloudsApropos = (canvas) => {
-    const animateClouds = () => {
-      for (const cloud of clouds) {
-        cloud.x += 0.1;
+  useEffect(() => {
+    const title = titleRef.current;
 
-        if (cloud.x > canvas.width) {
-          cloud.x = -cloud.width;
-        }
-      }
+    if (inView) {
+      animateTextApropos(title);
+      //animateCloudsApropos(cloudsCanvasRef.current);
+    }
+  }, [inView]);
 
-      drawClouds();
+  const animateTextApropos = (ref) => {
+    const text = ref.textContent;
+    const letters = text.split('');
 
-      requestAnimationFrame(animateClouds);
-    };
+    ref.textContent = '';
 
-    const drawClouds = () => {
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    letters.forEach((letter, index) => {
+      const span = document.createElement('span');
+      span.textContent = letter === ' ' ? '\u00A0' : letter;
+      span.style.animationDelay = `${index * 0.1}s`;
+      ref.appendChild(span);
+    });
+  };
 
-      for (const cloud of clouds) {
-        const wavePoints = createWavePoints(cloud);
 
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${cloud.opacity})`;
-
-        for (const point of wavePoints) {
-          ctx.ellipse(
-            point.x,
-            point.y,
-            cloud.width / 2,
-            cloud.height / 2,
-            0,
-            0,
-            2 * Math.PI
-          );
-        }
-
-        ctx.fill();
-      }
-    };
-
+  
+  
+  /*const animateCloudsApropos = (canvas) => {
+    const ctx = canvas.getContext('2d');
     const clouds = [];
 
     canvas.width = window.innerWidth;
@@ -75,63 +62,75 @@ const Apropos = () => {
       return Math.sqrt(dx * dx + dy * dy);
     }
 
-    animateClouds();
-  };
+    function drawClouds() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  useEffect(() => {
-  const title = titleRef.current;
+      for (const cloud of clouds) {
+        const wavePoints = createWavePoints(cloud);
 
-  const animate = () => {
-    animateTextApropos(title);
-    animateCloudsApropos(cloudsCanvasRef.current);
-  };
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 255, 255, ${cloud.opacity})`;
 
-  if (inView) {
-    animate();
-  }
-}, [inView, animateCloudsApropos]);
+        for (const point of wavePoints) {
+          ctx.ellipse(
+            point.x,
+            point.y,
+            cloud.width / 2,
+            cloud.height / 2,
+            0,
+            0,
+            2 * Math.PI
+          );
+        }
 
-  const animateTextApropos = (ref) => {
-    const text = ref.textContent;
-    const letters = text.split('');
-
-    ref.textContent = '';
-
-    letters.forEach((letter, index) => {
-      const span = document.createElement('span');
-      span.textContent = letter === ' ' ? '\u00A0' : letter;
-      span.style.animationDelay = `${index * 0.1}s`;
-      ref.appendChild(span);
-    });
-  };
-
-  const createWavePoints = (cloud) => {
-    const points = [];
-    const waveFrequency = 0.1;
-    const waveAmplitude = 10;
-
-    for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
-      const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
-      points.push({ x, y });
+        ctx.fill();
+      }
     }
 
-    return points;
-  };
+    function createWavePoints(cloud) {
+      const points = [];
+      const waveFrequency = 0.1;
+      const waveAmplitude = 10;
 
-  
+      for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
+        const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
+        points.push({ x, y });
+      }
+
+      return points;
+    }
+
+    function animateClouds() {
+      drawClouds();
+
+      for (const cloud of clouds) {
+        cloud.x += 0.1;
+
+        if (cloud.x > canvas.width) {
+          cloud.x = -cloud.width;
+        }
+      }
+
+      requestAnimationFrame(animateClouds);
+    }
+
+    animateClouds();
+  };*/
 
   return (
     <AproposContainer>
-      <CloudsCanvas ref={cloudsCanvasRef}></CloudsCanvas>
       <TitleContainer>
         <Title ref={(node) => { inViewRef(node); titleRef.current = node; }}>Qui suis-je ?</Title>
       </TitleContainer>
       <ParagraphContainer>
         <Paragraph>
-          <Anagram words={['Bonjour ! Je suis Elodie.', 'jourBon ! ej isus diloee.']} />
-          <Anagram words={['Actuellement Apprentie développeuse web junior,', 'teelucatelmn prniApete eupoeédsplve wbe rjunio,']} />
-          <Anagram words={['j\'effectue ma dernière année de mastère expert en développement web.', 'j\'eecuftfe am eènrderi néane ed tsamère xeeptr ne teeplvdéeopmn ewb.']} />
-        </Paragraph>
+      <Anagram words={['Bonjour ! Je suis Elodie.', 
+                       'jourBon ! ej isus diloee.']} />
+                        <Anagram words={['Actuellement Apprentie développeuse web junior,', 
+                       'teelucatelmn prniApete eupoeédsplve wbe rjunio,']} />
+                        <Anagram words={['j\'effectue ma dernière année de mastère expert en développement web.', 
+                       'j\'eecuftfe am eènrderi néane ed tsamère xeeptr ne teeplvdéeopmn ewb.']} />
+      </Paragraph>
       </ParagraphContainer>
     </AproposContainer>
   );
@@ -195,9 +194,9 @@ const AproposContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
+width: 100%;
+text-align: center;
+margin-top: 30px;
 `;
 
 const Title = styled(AnimatedText)`
