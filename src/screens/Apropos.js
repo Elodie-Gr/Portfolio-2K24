@@ -8,46 +8,23 @@ const Apropos = () => {
   const cloudsCanvasRef = useRef();
   const [inViewRef, inView] = useInView();
 
-  useEffect(() => {
-    const title = titleRef.current;
-
-    if (inView) {
-      animateTextApropos(title);
-      animateCloudsApropos(cloudsCanvasRef.current);
-    }
-  }, [inView]);
-
-  const animateTextApropos = (ref) => {
-    const text = ref.textContent;
-    const letters = text.split('');
-
-    ref.textContent = '';
-
-    letters.forEach((letter, index) => {
-      const span = document.createElement('span');
-      span.textContent = letter === ' ' ? '\u00A0' : letter;
-      span.style.animationDelay = `${index * 0.1}s`;
-      ref.appendChild(span);
-    });
-  };
-
-  const createWavePoints = (cloud) => {
-    const points = [];
-    const waveFrequency = 0.1;
-    const waveAmplitude = 10;
-
-    for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
-      const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
-      points.push({ x, y });
-    }
-
-    return points;
-  };
-
   const animateCloudsApropos = (canvas) => {
+    const animateClouds = () => {
+      for (const cloud of clouds) {
+        cloud.x += 0.1;
+
+        if (cloud.x > canvas.width) {
+          cloud.x = -cloud.width;
+        }
+      }
+
+      drawClouds();
+
+      requestAnimationFrame(animateClouds);
+    };
+
     const drawClouds = () => {
       const ctx = canvas.getContext('2d');
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const cloud of clouds) {
@@ -72,21 +49,6 @@ const Apropos = () => {
       }
     };
 
-    const animateClouds = () => {
-      for (const cloud of clouds) {
-        cloud.x += 0.1;
-
-        if (cloud.x > canvas.width) {
-          cloud.x = -cloud.width;
-        }
-      }
-
-      drawClouds();
-
-      requestAnimationFrame(animateClouds);
-    };
-
-    const ctx = canvas.getContext('2d');
     const clouds = [];
 
     canvas.width = window.innerWidth;
@@ -115,6 +77,44 @@ const Apropos = () => {
 
     animateClouds();
   };
+  
+  useEffect(() => {
+    const title = titleRef.current;
+
+    if (inView) {
+      animateTextApropos(title);
+      animateCloudsApropos(cloudsCanvasRef.current);
+    }
+  }, [inView, animateCloudsApropos]); // Ajouter animateCloudsApropos dans les dépendances
+
+  const animateTextApropos = (ref) => {
+    const text = ref.textContent;
+    const letters = text.split('');
+
+    ref.textContent = '';
+
+    letters.forEach((letter, index) => {
+      const span = document.createElement('span');
+      span.textContent = letter === ' ' ? '\u00A0' : letter;
+      span.style.animationDelay = `${index * 0.1}s`;
+      ref.appendChild(span);
+    });
+  };
+
+  const createWavePoints = (cloud) => {
+    const points = [];
+    const waveFrequency = 0.1;
+    const waveAmplitude = 10;
+
+    for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
+      const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
+      points.push({ x, y });
+    }
+
+    return points;
+  };
+
+  
 
   return (
     <AproposContainer>
