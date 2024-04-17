@@ -77,15 +77,19 @@ const Apropos = () => {
 
     animateClouds();
   };
-  
-  useEffect(() => {
-    const title = titleRef.current;
 
-    if (inView) {
-      animateTextApropos(title);
-      animateCloudsApropos(cloudsCanvasRef.current);
-    }
-  }, [inView, animateCloudsApropos]); // Ajouter animateCloudsApropos dans les dépendances
+  useEffect(() => {
+  const title = titleRef.current;
+
+  const animate = () => {
+    animateTextApropos(title);
+    animateCloudsApropos(cloudsCanvasRef.current);
+  };
+
+  if (inView) {
+    animate();
+  }
+}, [inView, animateCloudsApropos]);
 
   const animateTextApropos = (ref) => {
     const text = ref.textContent;
