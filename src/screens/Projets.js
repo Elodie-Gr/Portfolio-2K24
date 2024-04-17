@@ -75,45 +75,83 @@ const Projet = () => {
               partialVisibilityGutter: 30
             }
           }}
+          autoPlay={true}
+          autoPlaySpeed={2000} 
         >
           {/* Contenu du carrousel */}
           <CarouselItem
-            onClick={() => openModal({ title: "Apprendre les pays", description: "Application mobile en React Native", image: CarteMonde })}
+            onClick={() => openModal({ title: "Countriestive - Apprendre les pays par coeur",  description: (
+              <>
+                <DescriptionItem>Cette application mobile a été conçue avec React Native.</DescriptionItem>
+                <DescriptionItem>Elle permet d'en apprendre plus sur les pays du monde entier grâce à une description. Possibilité de les mettre en favoris.</DescriptionItem>
+                <DescriptionItem>Pour en savoir plus, consultez la démonstration présente dans le ReadMe <a href="https://github.com/Elodie-Gr/ynov-webMobile">https://github.com/Elodie-Gr/ynov-webMobile</a></DescriptionItem>
+              </>
+            ), image: CarteMonde })}
           >
             <CarouselImage src={CarteMonde} alt="Carte du monde" />
             <TitleItem>Countriestive - Apprendre les pays par coeur</TitleItem>
             <DescriptionItem>Application mobile en React Native</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Bookolect - gérer sa bibliothèque de livres", description: "Application mobile avec Flutter", image: Bookolect })}
+            onClick={() => openModal({ title: "Bookolect - gérer sa bibliothèque de livres", description: (
+              <>
+                <DescriptionItem>Cette application mobile a été conçue avec Flutter.</DescriptionItem>
+                <DescriptionItem>Son utilisation est simple : il suffit de scanner le code barre de votre livre. Vous pouvez les gérer et trier.</DescriptionItem>
+                <DescriptionItem>Pour en savoir plus, consultez le PDF <a href="https://github.com/Elodie-Gr/Bookolect/blob/main/Bookolect.pdf">https://github.com/Elodie-Gr/Bookolect/blob/main/Bookolect.pdf</a></DescriptionItem>
+              </>
+            ), image: Bookolect })}
           >
             <CarouselImage src={Bookolect} alt="Livres" />
             <TitleItem>Bookolect - gérer sa bibliothèque de livres</TitleItem>
             <DescriptionItem>Application mobile avec Flutter</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Guide touristique des villes de France", description: "Site web avec l'outil Notion", image: GuideTouristique })}
+            onClick={() => openModal({ title: "Guide touristique des villes de France", description: (
+              <>
+                <DescriptionItem>Ce site web a été conçue avec Notion.</DescriptionItem>
+                <DescriptionItem>Il partage les incontournables à voir dans chaque ville de France que j’ai pu visiter. </DescriptionItem>
+                <DescriptionItem>Pour y accéder, <a href="https://guidetouristique.notion.site/Guide-touristique-des-villes-de-France-75fc71f9dae7417fa077e1a4387b8def?pvs=4">cliquez ici !</a></DescriptionItem>
+              </>
+            ), image: GuideTouristique })}
           >
             <CarouselImage src={GuideTouristique} alt="Guide touristique" />
             <TitleItem>Guide touristique des villes de France</TitleItem>
             <DescriptionItem>Site web avec l'outil Notion</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Tickat - Outil de ticketting pour les entreprises", description: "Site web en HTML, CSS, Javascript et PHP", image: Tickat })}
+            onClick={() => openModal({ title: "Tickat - Outil de ticketting pour les entreprises", description: (
+              <>
+                <DescriptionItem>Ce site web a été conçue avec PHP, HTML, CSS et Javascript.</DescriptionItem>
+                <DescriptionItem>Il permet aux entreprises de communiquer avec leurs clients à l'aide de tickets. </DescriptionItem>
+                <DescriptionItem>Pour en savoir plus, consulter le PDF <a href="https://github.com/Elodie-Gr/Tickat/blob/main/03-Documentation_Utilisateur_tick.pdf"> ici !</a></DescriptionItem>
+              </>
+            ), image: Tickat })}
           >
             <CarouselImage src={Tickat} alt="Tickat" />
             <TitleItem>Tickat - Outil de ticketting pour les entreprises</TitleItem>
             <DescriptionItem>Site web en HTML, CSS, Javascript et PHP</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Module de pointage par QR Code pour les salariés", description: "Module utilisant C# avec l'architecture MVC et l'outil Telerik Reporting Designer", image: QrCode })}
+            onClick={() => openModal({ title: "Module de pointage par QR Code pour les salariés", description: (
+              <>
+                <DescriptionItem>Ce site web a été conçue avec C# en architecture MVC.</DescriptionItem>
+                <DescriptionItem>Il permet aux entreprises de créer des QR Code pour leur site afin que les agents qui le visitent puisse signaler leur présence. </DescriptionItem>
+                <DescriptionItem>Je ne peux pas communiquer de code sur ce projet car c'est un projet d'entreprise.</DescriptionItem>
+              </>
+            ), image: QrCode })}
           >
             <CarouselImage src={QrCode} alt="Qr Code" />
             <TitleItem>Module de pointage par QR Code pour les salariés</TitleItem>
             <DescriptionItem>Module utilisant C# avec l'architecture MVC</DescriptionItem>
           </CarouselItem>
           <CarouselItem
-            onClick={() => openModal({ title: "Formulaire de questions pour les salariés", description: "Application mobile Windev", image: Formulaire })}
+            onClick={() => openModal({ title: "Formulaire de questions pour les salariés", description: (
+              <>
+                <DescriptionItem>Ce module a été conçu avec Windev mobile.</DescriptionItem>
+                <DescriptionItem>Il permet aux agents des entreprises de répondre à des formulaires de questions. </DescriptionItem>
+                <DescriptionItem>Je ne peux pas communiquer de code sur ce projet car c'est un projet d'entreprise.</DescriptionItem>
+              </>
+            ), image: Formulaire })}
           >
             <CarouselImage src={Formulaire} alt="Formulaire" />
             <TitleItem>Formulaire de questions pour les salariés</TitleItem>
@@ -225,6 +263,8 @@ const DescriptionItem = styled.p`
   margin-top: 5px;
   font-size: 14px;
   color: #333;
+  text-align: justify; /* Justifier le texte */
+  line-height: 0.5; /* Réduire l'espacement entre les lignes */
 `;
 
 const ModalContainer = styled.div`
@@ -240,19 +280,18 @@ const ModalContainer = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 20px;
-  border-radius: 5px;
-  max-width: 80%;
-  max-height: 80%;
+  border-radius: 10px;
+  max-width: 50%;
+  max-height: 50%;
   overflow: auto;
   position: relative;
-  display: flex; /* Ajout de flexbox */
-  flex-direction: column; /* Aligner les éléments en colonne */
-  align-items: center; /* Centrer horizontalement */
-  justify-content: center; /* Centrer verticalement */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
-
 
 const CloseButton = styled.button`
   position: absolute;
@@ -264,5 +303,6 @@ const CloseButton = styled.button`
   color: #333;
   font-size: 20px;
 `;
+
 
 export default Projet;
