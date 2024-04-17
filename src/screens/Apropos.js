@@ -31,8 +31,23 @@ const Apropos = () => {
     });
   };
 
+  const createWavePoints = (cloud) => {
+    const points = [];
+    const waveFrequency = 0.1;
+    const waveAmplitude = 10;
+
+    for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
+      const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
+      points.push({ x, y });
+    }
+
+    return points;
+  };
+
   const animateCloudsApropos = (canvas) => {
     const drawClouds = () => {
+      const ctx = canvas.getContext('2d');
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const cloud of clouds) {
@@ -57,22 +72,7 @@ const Apropos = () => {
       }
     };
 
-    const createWavePoints = (cloud) => {
-      const points = [];
-      const waveFrequency = 0.1;
-      const waveAmplitude = 10;
-
-      for (let x = cloud.x; x < cloud.x + cloud.width; x += 2) {
-        const y = cloud.y + cloud.height / 2 + Math.sin((x - cloud.x) * waveFrequency) * waveAmplitude;
-        points.push({ x, y });
-      }
-
-      return points;
-    };
-
     const animateClouds = () => {
-      drawClouds();
-
       for (const cloud of clouds) {
         cloud.x += 0.1;
 
@@ -80,6 +80,8 @@ const Apropos = () => {
           cloud.x = -cloud.width;
         }
       }
+
+      drawClouds();
 
       requestAnimationFrame(animateClouds);
     };
