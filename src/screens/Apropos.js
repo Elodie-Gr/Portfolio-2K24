@@ -136,7 +136,7 @@ const Apropos = () => {
   );
 };
 
-const CloudsCanvas = styled.canvas`
+/*const CloudsCanvas = styled.canvas`
   position: absolute;
   top: 0;
   left: 0;
@@ -144,7 +144,7 @@ const CloudsCanvas = styled.canvas`
   height: 90%;
   pointer-events: none;
   margin-top: 50px;
-`;
+`;*/
 
 const fadeIn = keyframes`
   from {
